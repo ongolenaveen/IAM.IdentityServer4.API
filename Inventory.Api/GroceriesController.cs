@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Inventory.Core.DomainModels;
-using Inventory.Core.Interfaces;
+﻿using Inventory.Core;
+using Inventory.Domain.DomainModels;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using System;
 
 namespace Inventory.Api
 {
@@ -15,15 +15,15 @@ namespace Inventory.Api
     [Route("api/[controller]")]
     public  class GroceriesController : ControllerBase {
 
-        private readonly IInventoryDataProvider _inventoryDataProvider;
+        private readonly IInventoryService _inventoryService;
 
         /// <summary>
         /// Constructor for Groceries Controller
         /// </summary>
         /// <param name="inventoryDataProvider">Inventory Data Provider</param>
-        public GroceriesController(IInventoryDataProvider inventoryDataProvider)
+        public GroceriesController(IInventoryService inventoryService)
         {
-            _inventoryDataProvider = inventoryDataProvider??throw new ArgumentNullException(nameof(inventoryDataProvider));
+            _inventoryService = inventoryService ?? throw new ArgumentNullException(nameof(inventoryService));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Inventory.Api
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _inventoryDataProvider.Upload(inventoryFile);
+            await _inventoryService.Upload(inventoryFile);
             return Ok();
         }
 
@@ -53,7 +53,7 @@ namespace Inventory.Api
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<IEnumerable<Fruit>>> Get()
         {
-            var response = await _inventoryDataProvider.Retrieve();
+            var response = await _inventoryService.Retrieve();
             return Ok(response);
         }
     }

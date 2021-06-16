@@ -1,10 +1,10 @@
 ﻿using AutoFixture;
 using FluentAssertions;
+using Inventory.Core;
+using Inventory.Domain.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using Inventory.Core.DomainModels;
-using Inventory.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,14 +14,14 @@ namespace Inventory.Api.Tests
     [TestFixture]
     public class GroceriesControllerTests:TestBase
     {
-        private Mock<IInventoryDataProvider> _mockInventoryDataProvider;
+        private Mock<IInventoryService> _mockInventoryService;
         private GroceriesController _sut;
 
         [SetUp]
         public void Setup()
         {
-            _mockInventoryDataProvider = _mockRepository.Create<IInventoryDataProvider>();
-            _sut = new GroceriesController(_mockInventoryDataProvider.Object);
+            _mockInventoryService = _mockRepository.Create<IInventoryService>();
+            _sut = new GroceriesController(_mockInventoryService.Object);
         }
 
         #region Upload
@@ -47,7 +47,7 @@ namespace Inventory.Api.Tests
         public void Upload_With_Error_While_Uploading_Raises_Exception()
         {
             var inventoryFile = _fixture.Create<InventoryFile>();
-            _mockInventoryDataProvider.Setup(x => x.Upload(It.IsAny<InventoryFile>())).Throws(new SystemException());
+            _mockInventoryService.Setup(x => x.Upload(It.IsAny<InventoryFile>())).Throws(new SystemException());
             Func<Task> action = async () => await _sut.Upload(inventoryFile);
             action.Should().Throw<SystemException>();
         }
@@ -56,7 +56,7 @@ namespace Inventory.Api.Tests
         public async Task Upload_With_Valid_Request_Returns_Valid_Response()
         {
             var inventoryFile = _fixture.Create<InventoryFile>();
-            _mockInventoryDataProvider.Setup(x => x.Upload(It.IsAny<InventoryFile>())).Returns(Task.FromResult<object>(null));
+            _mockInventoryService.Setup(x => x.Upload(It.IsAny<InventoryFile>())).Returns(Task.FromResult<object>(null));
             var response = await _sut.Upload(inventoryFile);
             response.Should().BeOfType<OkResult>();
         }
@@ -66,7 +66,7 @@ namespace Inventory.Api.Tests
         [Test]
         public void Get_With_Error_While_Retrieving_Groceries_Raises_Exception()
         {
-            _mockInventoryDataProvider.Setup(x => x.Retrieve()).Throws(new SystemException());
+            _mockInventoryService.Setup(x => x.Retrieve()).Throws(new SystemException());
             Func<Task> action = async () => await _sut.Get();
             action.Should().Throw<SystemException>();
         }
@@ -75,7 +75,7 @@ namespace Inventory.Api.Tests
         public async Task Get_With_Valid_Request_Returns_Valid_Response()
         {
             var groceries = _fixture.CreateMany<Fruit>(2);
-            _mockInventoryDataProvider.Setup(x => x.Retrieve()).Returns(Task.FromResult<IEnumerable<Fruit>>(groceries));
+            _mockInventoryService.Setup(x => x.Retrieve()).Returns(Task.FromResult<IEnumerable<Fruit>>(groceries));
             var response = await _sut.Get();
             response.Result.Should().BeOfType(typeof(OkObjectResult));
         }

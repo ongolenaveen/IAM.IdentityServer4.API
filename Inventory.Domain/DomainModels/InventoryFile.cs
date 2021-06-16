@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Inventory.Core.DomainModels
+namespace Inventory.Domain.DomainModels
 {
     /// <summary>
     /// Inventory File Domain Model

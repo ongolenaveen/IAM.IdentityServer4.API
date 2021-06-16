@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Inventory.Core.DomainModels;
-using Inventory.Core.Interfaces;
+﻿using Inventory.Domain.DomainModels;
+using Inventory.Domain.Interfaces;
 using Inventory.Extensions;
 using Inventory.SqlDbProvider.Database;
 using Inventory.SqlDbProvider.Interfaces;
 using Inventory.SqlDbProvider.Models.CsvMappers;
 using Inventory.SqlDbProvider.Models.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;

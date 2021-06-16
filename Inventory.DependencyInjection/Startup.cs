@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 using Inventory.Api;
 using System;
 
-namespace Inventory.WebApp
+namespace Inventory.DependencyInjection
 {
     /// <summary>
     /// Start Up Class
@@ -41,6 +41,8 @@ namespace Inventory.WebApp
                 options.ReportApiVersions = true;
             });
 
+            services.AddBindings(Configuration);
+
             services.AddSwaggerGen((options) => {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
@@ -66,7 +68,6 @@ namespace Inventory.WebApp
             })
                 .AddApplicationPart(assembly);
 
-            services.AddBindings(Configuration);
         }
 
         /// <summary>
@@ -80,6 +81,8 @@ namespace Inventory.WebApp
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseIdentityServer();
 
             app.UseApiVersioning();
 

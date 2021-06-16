@@ -9,7 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Inventory.SqlDbProvider\Inventory.SqlDbProvider.csproj" />
+    <ProjectReference Include="..\Inventory.Contracts\Inventory.Core.csproj" />
+    <ProjectReference Include="..\Inventory.Domain\Inventory.Domain.csproj" />
   </ItemGroup>
 
 </Project>

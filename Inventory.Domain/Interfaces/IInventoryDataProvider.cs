@@ -1,8 +1,8 @@
-﻿using Inventory.Core.DomainModels;
+﻿using Inventory.Domain.DomainModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Inventory.Core.Interfaces
+namespace Inventory.Domain.Interfaces
 {
     /// <summary>
     /// This Interface contains all the contracts needed for Inventory Data Provider

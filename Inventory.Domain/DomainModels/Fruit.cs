@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Inventory.Core.DomainModels
+namespace Inventory.Domain.DomainModels
 {
     /// <summary>
     /// Fruit Domain Model
