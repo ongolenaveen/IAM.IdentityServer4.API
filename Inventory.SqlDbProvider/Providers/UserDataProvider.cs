@@ -13,7 +13,7 @@ namespace Inventory.SqlDbProvider.Providers
                 UserName = userName,
                 FirstName = "Naveen",
                 LastName = "Papisetty",
-                SubjectId = "naveen.papisetty",
+                SubjectId = "3",
                 Address = new Address
                 {
                     Line1 = "106",
